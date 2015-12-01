@@ -1,46 +1,145 @@
-// Enemies our player must avoid
-var Enemy = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
+var tileHeight = 83;
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+var tileWidth = 101;
+
+var Enemy = function () {
     this.sprite = 'images/enemy-bug.png';
+    this.x = 0;
+    this.y = this.findRandomY();
+    this.finalXLocation = 485;
+    this.speed = this.findRandomSpeed();
+
+
+};
+Enemy.prototype.findRandomY = function () {
+    var random = Math.floor((Math.random() * 4) + 1);
+    if (random === 1) return 322;
+    if (random === 2) return (322 - tileHeight);
+    if (random === 3) return (322 - 2 * tileHeight);
+    else return (322 - 3 * tileHeight);
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
+Enemy.prototype.findRandomSpeed = function () {
+    return Math.floor((Math.random() * 200) + 100);
 };
 
-// Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
+Enemy.prototype.update = function (dt) {
+    if (this.x >= this.finalXLocation) {
+        this.reset();
+    }
+    else {
+        this.x += this.speed * dt;
+    }
+
+    this.checkCollisions();
+};
+
+Enemy.prototype.checkCollisions = function () {
+    if (player.y === this.y) {
+        if (player.x + 30 > this.x && player.x - 30 < this.x) {
+            setTimeout(function () {
+                alert("Oh no, you lost!")
+            }, 10);
+            setTimeout(function () {
+                player.reset()
+            }, 50);
+        }
+    }
+};
+
+Enemy.prototype.reset = function () {
+    this.x = -80;
+    this.y = this.findRandomY();
+    this.speed = this.findRandomSpeed();
+};
+
+Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+
+var Player = function () {
+    this.sprite = 'images/char-cat-girl.png';
+
+    this.maxY = 405;
+    this.maxX = 400;
+
+    this.x = 200;
+    this.y = this.maxY;
+
+    this.waterLineY = 0;
+};
 
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
+Player.prototype.update = function () {
 
+    if (this.y < this.waterLineY) {
+        setTimeout(function () {
+            alert("Victory!");
+            return player.reset();
+        }, 10);
+    }
+};
 
+Player.prototype.reset = function () {
+    this.x = 200;
+    this.y = this.maxY;
+};
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
+Player.prototype.render = function () {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+Player.prototype.handleInput = function (key) {
+    if (key === 'left') {
+        if (this.x > 0) {
+            this.moveOneTileLeft();
+        }
+    }
+
+    if (key === 'right') {
+        if (this.x <= this.maxX) {
+            this.moveOneTileRight();
+        }
+    }
+
+    if (key === 'up') {
+        if (this.y > this.waterLineY) {
+            this.moveOneTileUp();
+        }
+    }
+
+    if (key === 'down') {
+        if (this.y < this.maxY) {
+            this.moveOneTileDown();
+        }
+    }
+};
+
+document.addEventListener('keyup', function (e) {
     var allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
         40: 'down'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+Player.prototype.moveOneTileRight = function () {
+    this.x += tileWidth;
+};
+Player.prototype.moveOneTileLeft = function () {
+    this.x -= tileWidth;
+
+};
+Player.prototype.moveOneTileUp = function () {
+    this.y -= tileHeight;
+};
+Player.prototype.moveOneTileDown = function () {
+    this.y += tileHeight;
+};
+
+
+var player = new Player();
+var allEnemies = [new Enemy(), new Enemy(), new Enemy(), new Enemy(), new Enemy()];

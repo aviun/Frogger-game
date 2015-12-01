@@ -1,6 +1,14 @@
 frontend-nanodegree-arcade-game
 ===============================
 
-Students should use this rubric: https://www.udacity.com/course/viewer#!/c-ud015/l-3072058665/m-3072588797
+Here you can play [Frogger](http://aviun.github.io/frontend-nanodegree-arcade-game)
 
-for self-checking their submission.
+This is a basic version of a game, player doesn't have any life limit.
+
+Rules:
+
+1. Use arrows to move in different directions.
+2. When your character walks into a bug the game starts over again.
+3. Player wins when Cat-Girl reaches the water.
+
+Good luck!
