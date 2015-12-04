@@ -62,7 +62,7 @@ Enemy.prototype.reset = function () {
 };
 
 Enemy.prototype.render = function () {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    this.renderCharacter();
 };
 
 
@@ -76,6 +76,7 @@ var Player = function () {
 
     this.lives = 5;
     this.victories = 0;
+    this.bestResult = 0;
 
     this.waterLineY = TILE_HEIGHT;
 };
@@ -84,12 +85,11 @@ Player.prototype.update = function () {
 
     if (this.y < this.waterLineY) {
 
-        setTimeout(function () {
             alert("Victory!");
             player.victories++;
+            updateBestResult();
 
             return player.reset();
-        }, 5);
     }
 };
 
@@ -103,33 +103,39 @@ Player.prototype.resetLives = function () {
 };
 
 Player.prototype.render = function () {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-
+    this.renderCharacter();
     this.setFonts();
     renderLives();
     renderVictories();
-
+    renderBestResult();
 };
 
-var renderLives = function(){
-
+var renderLives = function () {
     ctx.drawImage(Resources.get('images/Heart.png'), 0, -30);
-
     var livesString = player.lives.toString();
     ctx.fillText(livesString, TILE_WIDTH / 2, TILE_HEIGHT);
     ctx.strokeText(livesString, TILE_WIDTH / 2, TILE_HEIGHT);
 };
-
-var renderVictories = function(){
-
+var renderVictories = function () {
     ctx.drawImage(Resources.get('images/Star.png'), TILE_WIDTH * (COL_NUMBER - 1), -40);
-
     var victoriesString = player.victories.toString();
     ctx.fillText(victoriesString, TILE_WIDTH * (COL_NUMBER - 0.5), TILE_HEIGHT);
     ctx.strokeText(victoriesString, TILE_WIDTH * (COL_NUMBER - 0.5), TILE_HEIGHT);
+};
+
+var renderBestResult = function () {
+    ctx.drawImage(Resources.get('images/bestResults.png'), 0, (ROW_NUMBER+1.5)*TILE_HEIGHT);
+    var resultsString = player.bestResult.toString();
+    ctx.fillText(resultsString, 2.5*TILE_WIDTH, (ROW_NUMBER+2.2)*TILE_HEIGHT);
+    ctx.strokeText(resultsString, 2.5*TILE_WIDTH,(ROW_NUMBER+2.2)*TILE_HEIGHT);
 
 };
 
+var updateBestResult = function(){
+  if (player.victories > player.bestResult) {
+      player.bestResult = player.victories;
+  }
+};
 
 Player.prototype.handleInput = function (key) {
     if (key === 'left') {
@@ -188,9 +194,13 @@ for (var i = 0; i < (ROW_NUMBER + 0.5 * ROW_NUMBER); i++) {
     allEnemies.push(new Enemy());
 }
 
-Object.prototype.setFonts = function(){
+Object.prototype.setFonts = function () {
     ctx.font = "50px Comic Sans MS";
     ctx.fillStyle = "beige";
     ctx.strokeStyle = "black";
     ctx.textAlign = "center";
+};
+
+Object.prototype.renderCharacter = function () {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };

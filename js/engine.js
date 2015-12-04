@@ -132,7 +132,7 @@ var Engine = (function (global) {
                  * We're using our Resources helpers to refer to our images
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
-                */
+                 */
                 ctx.drawImage(Resources.get(rowImages[row - 1]), col * TILE_WIDTH, row * TILE_HEIGHT);
             }
         }
@@ -176,7 +176,8 @@ var Engine = (function (global) {
         'images/char-cat-girl-mini.png',
         'images/Rock.png',
         'images/Heart.png',
-        'images/Star.png'
+        'images/Star.png',
+        'images/bestResults.png'
 
     ]);
     Resources.onReady(init);
