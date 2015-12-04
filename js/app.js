@@ -125,10 +125,14 @@ var renderVictories = function () {
     ctx.strokeText(victoriesString, TILE_WIDTH * (COL_NUMBER - 0.5), TILE_HEIGHT);
 };
 var renderBestResult = function () {
-    ctx.drawImage(Resources.get('images/bestResults.png'), 0, (ROW_NUMBER + 1.10) * TILE_HEIGHT);
+    ctx.drawImage(Resources.get('images/emptyBanner.png'), 0, (ROW_NUMBER + 1.10) * TILE_HEIGHT);
     var resultsString = player.bestResult.toString();
-    ctx.fillText(resultsString, 2.5 * TILE_WIDTH, (ROW_NUMBER + 1.8) * TILE_HEIGHT);
-    ctx.strokeText(resultsString, 2.5 * TILE_WIDTH, (ROW_NUMBER + 1.8) * TILE_HEIGHT);
+
+    ctx.fillText("Best Result:", 1.4 * TILE_WIDTH, (ROW_NUMBER + 1.8) * TILE_HEIGHT);
+    ctx.strokeText("Best Result:", 1.4 * TILE_WIDTH, (ROW_NUMBER + 1.8) * TILE_HEIGHT);
+
+    ctx.fillText(resultsString, 3.5 * TILE_WIDTH, (ROW_NUMBER + 1.8) * TILE_HEIGHT);
+    ctx.strokeText(resultsString, 3.5 * TILE_WIDTH, (ROW_NUMBER + 1.8) * TILE_HEIGHT);
 
 };
 
@@ -197,7 +201,7 @@ for (var i = 0; i < (ROW_NUMBER + 0.5 * ROW_NUMBER); i++) {
 
 Object.prototype.setFonts = function () {
     ctx.font = "50px Comic Sans MS";
-    ctx.fillStyle = "beige";
+    ctx.fillStyle = "#FFF9CC";
     ctx.strokeStyle = "black";
     ctx.textAlign = "center";
 };

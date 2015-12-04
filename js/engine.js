@@ -177,7 +177,7 @@ var Engine = (function (global) {
         'images/Rock.png',
         'images/Heart.png',
         'images/Star.png',
-        'images/bestResults.png'
+        'images/emptyBanner.png'
 
     ]);
     Resources.onReady(init);
