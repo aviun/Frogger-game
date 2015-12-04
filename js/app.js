@@ -3,6 +3,10 @@ var TILE_WIDTH = 101;
 var COL_NUMBER = 5;
 var ROW_NUMBER = 7;
 
+Object.prototype.renderCharacter = function () {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
 var Enemy = function () {
     this.sprite = 'images/enemy-bug-mini.png';
     this.x = 0;
@@ -85,11 +89,11 @@ Player.prototype.update = function () {
 
     if (this.y < this.waterLineY) {
 
-            alert("Victory!");
-            player.victories++;
-            updateBestResult();
+        alert("Victory!");
+        player.victories++;
+        updateBestResult();
 
-            return player.reset();
+        return player.reset();
     }
 };
 
@@ -122,19 +126,18 @@ var renderVictories = function () {
     ctx.fillText(victoriesString, TILE_WIDTH * (COL_NUMBER - 0.5), TILE_HEIGHT);
     ctx.strokeText(victoriesString, TILE_WIDTH * (COL_NUMBER - 0.5), TILE_HEIGHT);
 };
-
 var renderBestResult = function () {
-    ctx.drawImage(Resources.get('images/bestResults.png'), 0, (ROW_NUMBER+1.5)*TILE_HEIGHT);
+    ctx.drawImage(Resources.get('images/bestResults.png'), 0, (ROW_NUMBER + 1.5) * TILE_HEIGHT);
     var resultsString = player.bestResult.toString();
-    ctx.fillText(resultsString, 2.5*TILE_WIDTH, (ROW_NUMBER+2.2)*TILE_HEIGHT);
-    ctx.strokeText(resultsString, 2.5*TILE_WIDTH,(ROW_NUMBER+2.2)*TILE_HEIGHT);
+    ctx.fillText(resultsString, 2.5 * TILE_WIDTH, (ROW_NUMBER + 2.2) * TILE_HEIGHT);
+    ctx.strokeText(resultsString, 2.5 * TILE_WIDTH, (ROW_NUMBER + 2.2) * TILE_HEIGHT);
 
 };
 
-var updateBestResult = function(){
-  if (player.victories > player.bestResult) {
-      player.bestResult = player.victories;
-  }
+var updateBestResult = function () {
+    if (player.victories > player.bestResult) {
+        player.bestResult = player.victories;
+    }
 };
 
 Player.prototype.handleInput = function (key) {
@@ -201,6 +204,3 @@ Object.prototype.setFonts = function () {
     ctx.textAlign = "center";
 };
 
-Object.prototype.renderCharacter = function () {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
