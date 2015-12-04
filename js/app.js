@@ -105,24 +105,31 @@ Player.prototype.resetLives = function () {
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
+    this.setFonts();
+    renderLives();
+    renderVictories();
+
+};
+
+var renderLives = function(){
+
     ctx.drawImage(Resources.get('images/Heart.png'), 0, -30);
-    ctx.drawImage(Resources.get('images/Star.png'), TILE_WIDTH * (COL_NUMBER - 1), -40);
 
-    ctx.font = "50px Comic Sans MS";
-    ctx.fillStyle = "beige";
-    ctx.strokeStyle = "black";
-    ctx.textAlign = "center";
-
-    var livesString = this.lives.toString();
-    var victoriesString = this.victories.toString();
-
+    var livesString = player.lives.toString();
     ctx.fillText(livesString, TILE_WIDTH / 2, TILE_HEIGHT);
     ctx.strokeText(livesString, TILE_WIDTH / 2, TILE_HEIGHT);
+};
 
+var renderVictories = function(){
+
+    ctx.drawImage(Resources.get('images/Star.png'), TILE_WIDTH * (COL_NUMBER - 1), -40);
+
+    var victoriesString = player.victories.toString();
     ctx.fillText(victoriesString, TILE_WIDTH * (COL_NUMBER - 0.5), TILE_HEIGHT);
     ctx.strokeText(victoriesString, TILE_WIDTH * (COL_NUMBER - 0.5), TILE_HEIGHT);
 
 };
+
 
 Player.prototype.handleInput = function (key) {
     if (key === 'left') {
@@ -180,3 +187,10 @@ var allEnemies = [];
 for (var i = 0; i < (ROW_NUMBER + 0.5 * ROW_NUMBER); i++) {
     allEnemies.push(new Enemy());
 }
+
+Object.prototype.setFonts = function(){
+    ctx.font = "50px Comic Sans MS";
+    ctx.fillStyle = "beige";
+    ctx.strokeStyle = "black";
+    ctx.textAlign = "center";
+};
