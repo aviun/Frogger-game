@@ -51,10 +51,7 @@ Enemy.prototype.checkCollisions = function () {
                 (alert("GAME OVER!"));
             }
 
-            player.victories = 0;
-
             player.reset();
-
         }
     }
 };
@@ -104,6 +101,7 @@ Player.prototype.reset = function () {
 
 Player.prototype.resetLives = function () {
     this.lives = 5;
+    this.victories = 0;
 };
 
 Player.prototype.render = function () {
