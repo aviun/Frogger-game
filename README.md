@@ -1,4 +1,4 @@
-frontend-nanodegree-arcade-game
+Frogger game
 ===============================
 
 Here you can play [Frogger](http://aviun.github.io/frontend-nanodegree-arcade-game)
