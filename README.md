@@ -1,7 +1,7 @@
 Frogger game
 ===============================
 
-Here you can play [Frogger](http://aviun.github.io/frontend-nanodegree-arcade-game)
+Here you can play [Frogger](https://aviun.github.io/Frogger-game/)
 
 Rules:
 
